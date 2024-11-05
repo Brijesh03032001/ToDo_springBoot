@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todo Application</title>
+    <link rel="stylesheet" href="../static/style.css">
+</head>
+<body>
+
+<h1>Todo Application</h1>
+
+<div class="todo-container">
+
+    <form action="tasks" method="post">
+        <div>
+            <input type="text" name="title" id="taskInput" placeholder="Enter task..." required>
+        </div>
+
+        <div>
+            <button type="submit" id="addTaskButton">Add Task</button>
+        </div>
+    </form>
+</div>
+
+    <div id="taskList">
+        <div class="task" th:each="task, iterStat : ${tasks}">
+        <span th:text="${task.title}"
+              th:classappend="${task.completed} ? 'completed' : ''"></span>
+
+            <form th:action="@{/toggleTask}" method="post" style="display:inline;">
+                <input type="hidden" name="index" th:value="${iterStat.index}">
+                <button type="submit" class="toggle-btn">Toggle</button>
+            </form>
+
+            <form th:action="@{/deleteTask}" method="post" style="display:inline;">
+                <input type="hidden" name="index" th:value="${iterStat.index}">
+                <button type="submit" class="delete-btn">Delete</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+</body>
+</html>
